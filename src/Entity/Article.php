@@ -111,23 +111,31 @@ class Article
 
         return $this;
     }
+    public function isPublished() : bool
+    {
+        return $this->publishedAt !== null;
+    }
+
     public function getAuthor(): ?string
     {
         return $this->author;
     }
+
     public function setAuthor($author): self
     {
         $this->author = $author;
         return $this;
     }
+
     public function getImageFilename(): ?string
     {
         return $this->imageFilename;
     }
+
     public function setImageFilename($imageFilename): self
     {
         $this->imageFilename = $imageFilename;
-        return  $this;
+        return $this;
     }
 
     /**

@@ -6,16 +6,18 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/", name="app_homepage")
+     * @Route("/news", name="news_homepage")
      */
-    public function homepage(ArticleRepository $repository)
+    public function homepage(ArticleRepository $repository) : Response
     {
         $articles = $repository->findAllOrderedByNewest();
+
         return $this->render('article/homepage.html.twig', [
             'articles' => $articles
         ]);
@@ -24,7 +26,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/news/{slug}", name="article_show")
      */
-    public function show(Article $article)
+    public function show(Article $article) : Response
     {
         return $this->render('article/show.html.twig', [
             'article' => $article,
@@ -33,11 +35,12 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/newest", name="app_newest")
+     * @Route("/newest", name="news_newest")
      */
-    public function newest(ArticleRepository $repository)
+    public function newest(ArticleRepository $repository) : Response
     {
         $articles = $repository->findAllNewest();
+
         return $this->render('article/newest.html.twig', [
             'articles' => $articles
         ]);

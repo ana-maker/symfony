@@ -15,14 +15,14 @@
 
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
-            <strong><a style="margin-left: 75px;" class="navbar-brand space-brand" href={{ path('app_homepage') }}>Home page</a></strong>
+            <strong><a style="margin-left: 75px;" class="navbar-brand space-brand" href={{ path('news_homepage') }}>Home page</a></strong>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
                      <li class="nav-item">
-                       <strong><a style="color: #fff;" class="nav-link" href={{ path('app_newest')}}>Newest</a></strong>
+                       <strong><a style="color: #fff;" class="nav-link" href={{ path('news_newest')}}>Newest</a></strong>
                      </li>
                      <li class="nav-item">
                       <strong><a style="color: #fff;" class="nav-link" href="#">Fake Drugs</a></strong>
@@ -38,8 +38,8 @@
                   <img class="nav-profile-img rounded-circle" src={{ asset('images/admin.png') }}>
                 </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href={{ path('app_admin') }}>Profile</a>
-                            <a class="dropdown-item" href="#">Create Post</a>
+                            <a class="dropdown-item" href={{ path('admin_article_all') }}>Admin</a>
+                            <a class="dropdown-item" href={{ path('admin_article_new') }}>Create Post</a>
                             <a class="dropdown-item" href="#">Logout</a>
                         </div>
                     </li>
