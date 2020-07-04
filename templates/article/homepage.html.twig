@@ -9,27 +9,28 @@
             <div class="col-sm-12 col-md-8">
 
                 <!-- H1 Article -->
-                    <div class="main-article mb-5 pb-3">
-                        <img src="{{ asset('images/homepage.jpg') }}" alt="drugs">
-                    </div>
+                <div class="main-article mb-5 pb-3">
+                    <img src="{{ asset('images/homepage.jpg') }}" alt="drugs">
+                </div>
 
                 <!-- Supporting Articles -->
-                 {% for article in articles %}
-                <div class="article-container my-1">
+                {% for article in articles %}
+                    <div class="article-container my-1">
 
-                    <a href="{{ path('article_show', {slug: article.slug}) }}">
-                        <img class="article-img" src="{{ asset(article.imageFilename) }}">
-                        <div class="article-title d-inline-block pl-3 align-middle">
-                            <span>{{ article.title }}</span>
-                            <br>
-                            <span class="align-left article-details"><img class="article-author-img rounded-circle" src="{{ asset('images/alien-profile.png') }}"> {{ article.author }} </span>
-                            <span class="pl-5 article-details float-right">
-                                {{ article.publishedAt ? article.publishedAt|ago}}
+                        <a href="{{ path('article_show', {slug: article.slug}) }}">
+                            <img class="article-img" src="{{ asset(article.imageFilename) }}">
+                            <div class="article-title d-inline-block pl-3 align-middle">
+                                <span>{{ article.title }}</span>
+                                <br>
+                                <span class="align-left article-details"><img class="article-author-img rounded-circle"
+                                                                              src="{{ asset('images/author.png') }}"> {{ article.author }} </span>
+                                <span class="pl-5 article-details float-right">
+                                {{ article.publishedAt ? article.publishedAt|ago }}
                             </span>
-                        </div>
-                    </a>
-                </div>
-                 {% endfor %}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
 
             </div>
 
@@ -45,15 +46,21 @@
 
                 <div class="quote-space pb-2 pt-2 px-5">
                     <h3 class="text-center pb-3">Trending Quotes</h3>
-                    <p><i class="fa fa-comment"></i> "One sometimes finds what one is not looking for." <br>— <a href="https://en.wikipedia.org/wiki/Alexander_Fleming">Sir Alexander Fleming</a></p>
+                    <p><i class="fa fa-comment"></i> "One sometimes finds what one is not looking for." <br>— <a
+                                href="https://en.wikipedia.org/wiki/Alexander_Fleming">Sir Alexander Fleming</a></p>
 
-                    <p class="pt-4"><i class="fa fa-comment"></i> "Nothing in life is to be feared, it is only to be understood." <br>— <a href="https://en.wikipedia.org/wiki/Marie_Curie">Marie Curie</a></p>
+                    <p class="pt-4"><i class="fa fa-comment"></i> "Nothing in life is to be feared, it is only to be
+                        understood." <br>— <a href="https://en.wikipedia.org/wiki/Marie_Curie">Marie Curie</a></p>
 
-                    <p class="pt-4"><i class="fa fa-comment"></i> "I saw in a dream a table where all the elements fell into place as required. Awakening, I immediately wrote it down on a piece of paper."<br>— <a href="https://en.wikipedia.org/wiki/Dmitri_Mendeleev">Dmitri Mendeleev</a>
+                    <p class="pt-4"><i class="fa fa-comment"></i> "I saw in a dream a table where all the elements fell
+                        into place as required. Awakening, I immediately wrote it down on a piece of paper."<br>— <a
+                                href="https://en.wikipedia.org/wiki/Dmitri_Mendeleev">Dmitri Mendeleev</a>
 
-                    <p class="pt-4"><i class="fa fa-comment"></i> "Intelligence is the ability to adapt to change." <br>— <a href="https://en.wikipedia.org/wiki/Stephen_Hawking">Stephen Hawking</a></p>
+                    <p class="pt-4"><i class="fa fa-comment"></i> "Intelligence is the ability to adapt to change." <br>—
+                        <a href="https://en.wikipedia.org/wiki/Stephen_Hawking">Stephen Hawking</a></p>
 
-                    <p class="pt-4"><i class="fa fa-comment"></i> "Natural selection is anything but random." <br>— <a href="https://en.wikipedia.org/wiki/Richard_Dawkins">Richard Dawkins</a></p>
+                    <p class="pt-4"><i class="fa fa-comment"></i> "Natural selection is anything but random." <br>— <a
+                                href="https://en.wikipedia.org/wiki/Richard_Dawkins">Richard Dawkins</a></p>
 
 
                 </div>

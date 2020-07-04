@@ -12,9 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/news", name="news_homepage")
+     * @param ArticleRepository $repository
+     * @return Response
+     * @Route("/", name="news_homepage")
      */
-    public function homepage(ArticleRepository $repository) : Response
+    public function homepage(ArticleRepository $repository): Response
     {
         $articles = $repository->findAllOrderedByNewest();
 
@@ -24,9 +26,11 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @param Article $article
+     * @return Response
      * @Route("/news/{slug}", name="article_show")
      */
-    public function show(Article $article) : Response
+    public function show(Article $article): Response
     {
         return $this->render('article/show.html.twig', [
             'article' => $article,
@@ -35,14 +39,17 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @param ArticleRepository $repository
+     * @return Response
      * @Route("/newest", name="news_newest")
      */
-    public function newest(ArticleRepository $repository) : Response
+    public function newest(ArticleRepository $repository): Response
     {
         $articles = $repository->findAllNewest();
 
         return $this->render('article/newest.html.twig', [
             'articles' => $articles
+
         ]);
     }
 }

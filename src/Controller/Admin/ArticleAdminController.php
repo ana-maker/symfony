@@ -4,6 +4,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleFormType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,18 +18,21 @@ class ArticleAdminController extends AbstractController
 {
 
     /**
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return Response
      * @Route("/admin/article/new", name="admin_article_new")
      */
-    public function new(EntityManagerInterface $em, Request $request): Response
+    public function newArticle(EntityManagerInterface $em, Request $request): Response
     {
         $form = $this->createForm(ArticleFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Article $article */
             $article = $form->getData();
-            $article->setAuthor('fjsdfjhfsf');
             $em->persist($article);
             $em->flush();
+
             return $this->redirectToRoute('admin_article_list');
         }
 
@@ -44,7 +48,7 @@ class ArticleAdminController extends AbstractController
      * @return Response
      * @Route("admin/article/list", name="admin_article_list")
      */
-    public function list(ArticleRepository $repository)
+    public function list(ArticleRepository $repository): Response
     {
         $articles = $repository->findAll();
 
@@ -54,18 +58,9 @@ class ArticleAdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/article/all", name="admin_article_all")
-     */
-    public function show(ArticleRepository $repository): Response
-    {
-        $articles = $repository->findAllOrderedByNewest();
-
-        return $this->render('article/admin.html.twig', [
-            'articles' => $articles
-        ]);
-    }
-
-    /**
+     * @param EntityManagerInterface $em
+     * @param int $id
+     * @return RedirectResponse
      * @Route("admin/article{id}/delete", name="admin_article_delete")
      */
     public function deleteArticle(EntityManagerInterface $em, int $id): RedirectResponse
@@ -74,7 +69,33 @@ class ArticleAdminController extends AbstractController
         $em->remove($article);
         $em->flush();
 
-        return $this->redirectToRoute('admin_all');
+        return $this->redirectToRoute('admin_article_list');
+    }
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param Article $article
+     * @return Response
+     * @Route("admin/article{id}/update", name="admin_article_update")
+     */
+
+    public function updateArticle(EntityManagerInterface $em, Request $request, Article $article): Response
+    {
+        $form = $this->createForm(ArticleFormType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_article_list', [
+                'id' => $article->getId()
+            ]);
+        }
+        return $this->render('article_admin/update.html.twig', [
+            'articleForm' => $form->createView(),
+            'id' => $article->getId()
+        ]);
     }
 
 

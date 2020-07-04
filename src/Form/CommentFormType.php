@@ -4,13 +4,13 @@
 namespace App\Form;
 
 
-use App\Entity\Article;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleFormType extends AbstractType
+class CommentFormType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,27 +19,18 @@ class ArticleFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
-                'help' => 'Introduce here your title'
-            ])
-            ->add('content')
-            ->add('publishedAt', null, [
-                'widget' => 'single_text'
-            ])
-            ->add('author')
-            ->add('content')
-            ->add('imageFilename');
+            ->add('content', TextareaType::class, ['help' => 'Comment on'])
+            ->add('authorName');
     }
 
     /**
      * @param OptionsResolver $resolver
      */
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Article::class
+            'data_class' => Comment::class
         ]);
     }
-
-
 }

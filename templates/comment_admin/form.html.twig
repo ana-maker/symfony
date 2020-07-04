@@ -1,0 +1,28 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %} Comment on {% endblock %}
+
+{% block content_body %}
+
+    <h1> Add your comment! </h1>
+    <br>
+    <div class="row mb-5">
+        <div class="col-sm-12">
+            <img class="comment-img rounded-circle" src="{{ asset('images/comment.jpg') }}">
+            <div class="comment-container d-inline-block pl-3 align-top">
+                <span class="commenter-name">Commentator</span>
+                <div class="form-group">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ form_start(commentForm) }}
+
+    {{ form_row(commentForm.authorName) }}
+    {{ form_row(commentForm.content) }}
+
+    <button type="submit" class="btn btn-primary"> Comment</button>
+
+{% endblock %}
+

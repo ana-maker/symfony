@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -22,6 +24,7 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $title;
 
@@ -50,7 +53,7 @@ class Article
     private $imageFilename;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article", cascade={"remove"})
      */
     private $comments;
 
@@ -111,7 +114,8 @@ class Article
 
         return $this;
     }
-    public function isPublished() : bool
+
+    public function isPublished(): bool
     {
         return $this->publishedAt !== null;
     }
@@ -167,5 +171,17 @@ class Article
         }
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback()
+     */
+    public function validate(ExecutionContextInterface $context, $payload): void
+    {
+        if (stripos($this->getTitle(), 'homeopathy is good') !== false) {
+            $context->buildViolation('Are you insane ???')
+                ->atPath('title')
+                ->addViolation();
+        }
     }
 }
