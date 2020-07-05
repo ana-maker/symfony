@@ -57,10 +57,14 @@ class CommentAdminController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $comment->setArticle($article);
+
             $em->persist($comment);
             $em->flush();
+
             return $this->redirectToRoute('article_show', [
                 'article' => $article->getId(),
                 'slug' => $article->getSlug()

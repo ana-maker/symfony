@@ -4,7 +4,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
-use App\Entity\Comment;
 use App\Form\ArticleFormType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
