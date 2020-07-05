@@ -3,8 +3,9 @@
 {% block title %} Update {% endblock title %}
 
 {% block content_body %}
-    <h1>Edit the Article! ?</h1>
+    <h1>Edit the Article! </h1>
 
+    <hr>
     {{ form_start(articleForm) }}
     {{ form_row(articleForm.title, {
         label: 'Article title'
@@ -12,7 +13,7 @@
     {{ form_row(articleForm.author) }}
     {{ form_row(articleForm.content) }}
     {{ form_row(articleForm.publishedAt) }}
-    {{ form_row(articleForm.imageFilename) }}
+    {{ form_row(articleForm.imageFile) }}
 
     <button type="submit" class="btn btn-primary">Update!</button>
     {{ form_end(articleForm) }}

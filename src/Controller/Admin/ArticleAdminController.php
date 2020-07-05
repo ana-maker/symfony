@@ -9,6 +9,7 @@ use App\Form\ArticleFormType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,9 +28,28 @@ class ArticleAdminController extends AbstractController
     {
         $form = $this->createForm(ArticleFormType::class);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             /** @var Article $article */
             $article = $form->getData();
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['imageFile']->getData();
+
+            if ($uploadedFile) {
+
+
+                $path = $this->getParameter('kernel.project_dir') . '/public/images';
+
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = 'images/' . $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+
+                $uploadedFile->move($path, $newFilename);
+
+                $article->setImageFilename($newFilename);
+            }
+
             $em->persist($article);
             $em->flush();
 
@@ -84,9 +104,27 @@ class ArticleAdminController extends AbstractController
     {
         $form = $this->createForm(ArticleFormType::class, $article);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['imageFile']->getData();
+
+            if ($uploadedFile) {
+
+
+                $path = $this->getParameter('kernel.project_dir') . '/public/images';
+
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = 'images/' . $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+
+                $uploadedFile->move($path, $newFilename);
+
+                $article->setImageFilename($newFilename);
+            }
             $em->persist($article);
             $em->flush();
+
 
             return $this->redirectToRoute('admin_article_list', [
                 'id' => $article->getId()
@@ -97,6 +135,5 @@ class ArticleAdminController extends AbstractController
             'id' => $article->getId()
         ]);
     }
-
 
 }
