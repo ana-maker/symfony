@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
@@ -14,6 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ArticleAdminController
+ * @package App\Controller\Admin
+ */
 class ArticleAdminController extends AbstractController
 {
 
@@ -37,8 +40,6 @@ class ArticleAdminController extends AbstractController
             $uploadedFile = $form['imageFile']->getData();
 
             if ($uploadedFile) {
-
-
                 $path = $this->getParameter('kernel.project_dir') . '/public/images';
 
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -80,7 +81,7 @@ class ArticleAdminController extends AbstractController
      * @param EntityManagerInterface $em
      * @param int $id
      * @return RedirectResponse
-     * @Route("admin/article{id}/delete", name="admin_article_delete")
+     * @Route("admin/article/{id}/delete", name="admin_article_delete")
      */
     public function deleteArticle(EntityManagerInterface $em, int $id): RedirectResponse
     {
@@ -96,9 +97,8 @@ class ArticleAdminController extends AbstractController
      * @param Request $request
      * @param Article $article
      * @return Response
-     * @Route("admin/article{id}/update", name="admin_article_update")
+     * @Route("admin/article/{id}/update", name="admin_article_update")
      */
-
     public function updateArticle(EntityManagerInterface $em, Request $request, Article $article): Response
     {
         $form = $this->createForm(ArticleFormType::class, $article);
@@ -110,8 +110,6 @@ class ArticleAdminController extends AbstractController
             $uploadedFile = $form['imageFile']->getData();
 
             if ($uploadedFile) {
-
-
                 $path = $this->getParameter('kernel.project_dir') . '/public/images';
 
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -121,14 +119,15 @@ class ArticleAdminController extends AbstractController
 
                 $article->setImageFilename($newFilename);
             }
+
             $em->persist($article);
             $em->flush();
-
 
             return $this->redirectToRoute('admin_article_list', [
                 'id' => $article->getId()
             ]);
         }
+
         return $this->render('article_admin/update.html.twig', [
             'articleForm' => $form->createView(),
             'id' => $article->getId()

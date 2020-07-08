@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
@@ -14,6 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class CommentAdminController
+ * @package App\Controller\Admin
+ */
 class CommentAdminController extends AbstractController
 {
     /**
@@ -34,7 +37,7 @@ class CommentAdminController extends AbstractController
      * @param EntityManagerInterface $em
      * @param int $id
      * @return RedirectResponse
-     * @Route("/admin/comment{id}/delete", name="admin_comment_delete")
+     * @Route("/admin/comment/{id}/delete", name="admin_comment_delete")
      */
     public function deleteComment(EntityManagerInterface $em, int $id): RedirectResponse
     {
@@ -50,29 +53,28 @@ class CommentAdminController extends AbstractController
      * @param Article $article
      * @param Request $request
      * @return Response
-     * @Route("/admin/comment/add{id}", name="admin_comment_add")
+     * @Route("/admin/comment/add/{id}", name="admin_comment_add")
      */
     public function newComment(EntityManagerInterface $em, Article $article, Request $request): Response
     {
         $comment = new Comment();
+
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $comment->setArticle($article);
 
             $em->persist($comment);
             $em->flush();
 
             return $this->redirectToRoute('article_show', [
-                'article' => $article->getId(),
+                'article' => $article,
                 'slug' => $article->getSlug()
             ]);
         }
 
         return $this->render('comment_admin/form.html.twig', [
-
             'commentForm' => $form->createView(),
             'article' => $article
         ]);
