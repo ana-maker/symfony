@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class CommentAdminController
  * @package App\Controller\Admin
  */
-class CommentAdminController extends AbstractController
+class CommentController extends AbstractController
 {
     /**
      * @param CommentRepository $commentRepository

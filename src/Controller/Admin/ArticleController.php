@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class ArticleAdminController
  * @package App\Controller\Admin
  */
-class ArticleAdminController extends AbstractController
+class ArticleController extends AbstractController
 {
     /**
      * @param EntityManagerInterface $em
