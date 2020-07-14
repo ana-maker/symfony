@@ -42,6 +42,7 @@ class CommentAdminController extends AbstractController
     public function deleteComment(EntityManagerInterface $em, int $id): RedirectResponse
     {
         $comment = $em->getRepository(Comment::class)->find($id);
+
         $em->remove($comment);
         $em->flush();
 

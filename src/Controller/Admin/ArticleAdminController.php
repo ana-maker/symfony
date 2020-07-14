@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArticleAdminController extends AbstractController
 {
-
     /**
      * @param EntityManagerInterface $em
      * @param Request $request
@@ -86,6 +85,7 @@ class ArticleAdminController extends AbstractController
     public function deleteArticle(EntityManagerInterface $em, int $id): RedirectResponse
     {
         $article = $em->getRepository(Article::class)->find($id);
+
         $em->remove($article);
         $em->flush();
 
