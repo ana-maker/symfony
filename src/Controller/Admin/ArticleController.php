@@ -59,7 +59,6 @@ class ArticleController extends AbstractController
             [
                 'articleForm' => $form->createView()
             ]);
-
     }
 
     /**
@@ -105,7 +104,6 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['imageFile']->getData();
 
@@ -133,5 +131,4 @@ class ArticleController extends AbstractController
             'id' => $article->getId()
         ]);
     }
-
 }
