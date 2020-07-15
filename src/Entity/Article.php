@@ -183,5 +183,7 @@ class Article
                 ->atPath('title')
                 ->addViolation();
         }
+
+        return;
     }
 }

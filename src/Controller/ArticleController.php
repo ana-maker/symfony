@@ -16,7 +16,9 @@ class ArticleController extends AbstractController
 {
     /**
      * @param ArticleRepository $repository
+     *
      * @return Response
+     *
      * @Route("/", name="news_homepage")
      */
     public function homepage(ArticleRepository $repository): Response
@@ -30,19 +32,23 @@ class ArticleController extends AbstractController
 
     /**
      * @param Article $article
+     *
      * @return Response
+     *
      * @Route("/news/{slug}", name="article_show")
      */
     public function show(Article $article): Response
     {
         return $this->render('article/show.html.twig', [
-            'article' => $article,
+            'article' => $article
         ]);
     }
 
     /**
      * @param ArticleRepository $repository
+     *
      * @return Response
+     *
      * @Route("/newest", name="news_newest")
      */
     public function newest(ArticleRepository $repository): Response

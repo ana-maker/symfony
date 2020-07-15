@@ -21,7 +21,9 @@ class CommentController extends AbstractController
 {
     /**
      * @param CommentRepository $commentRepository
+     *
      * @return Response
+     *
      * @Route("/admin/comment/all", name="admin_comment_all")
      */
     public function index(CommentRepository $commentRepository): Response
@@ -36,7 +38,9 @@ class CommentController extends AbstractController
     /**
      * @param EntityManagerInterface $em
      * @param int $id
+     *
      * @return RedirectResponse
+     *
      * @Route("/admin/comment/{id}/delete", name="admin_comment_delete")
      */
     public function deleteComment(EntityManagerInterface $em, int $id): RedirectResponse
@@ -53,7 +57,9 @@ class CommentController extends AbstractController
      * @param EntityManagerInterface $em
      * @param Article $article
      * @param Request $request
+     *
      * @return Response
+     *
      * @Route("/admin/comment/add/{id}", name="admin_comment_add")
      */
     public function newComment(EntityManagerInterface $em, Article $article, Request $request): Response
@@ -68,16 +74,15 @@ class CommentController extends AbstractController
 
             $em->persist($comment);
             $em->flush();
-
             return $this->redirectToRoute('article_show', [
                 'article' => $article,
-                'slug' => $article->getSlug()
+                'slug' => $article->getSlug(),
             ]);
         }
 
         return $this->render('comment_admin/form.html.twig', [
             'commentForm' => $form->createView(),
-            'article' => $article
+            'article' => $article,
         ]);
     }
 }

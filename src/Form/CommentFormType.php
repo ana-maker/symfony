@@ -23,7 +23,7 @@ class CommentFormType extends AbstractType
     {
         $builder
             ->add('content', TextareaType::class, ['help' => 'Comment on'])
-            ->add('authorName',TextType::class);
+            ->add('authorName', TextType::class);
     }
 
     /**

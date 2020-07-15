@@ -22,7 +22,9 @@ class ArticleController extends AbstractController
     /**
      * @param EntityManagerInterface $em
      * @param Request $request
+     *
      * @return Response
+     *
      * @Route("/admin/article/new", name="admin_article_new")
      */
     public function newArticle(EntityManagerInterface $em, Request $request): Response
@@ -31,7 +33,6 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             /** @var Article $article */
             $article = $form->getData();
 
@@ -42,7 +43,7 @@ class ArticleController extends AbstractController
                 $path = $this->getParameter('kernel.project_dir') . '/public/images';
 
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = 'images/' . $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+                $newFilename = 'images/'.$originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
 
                 $uploadedFile->move($path, $newFilename);
 
@@ -51,19 +52,19 @@ class ArticleController extends AbstractController
 
             $em->persist($article);
             $em->flush();
-
             return $this->redirectToRoute('admin_article_list');
         }
 
-        return $this->render('article_admin/new.html.twig',
-            [
-                'articleForm' => $form->createView()
-            ]);
+        return $this->render('article_admin/new.html.twig', [
+            'articleForm' => $form->createView()
+        ]);
     }
 
     /**
      * @param ArticleRepository $repository
+     *
      * @return Response
+     *
      * @Route("admin/article/list", name="admin_article_list")
      */
     public function list(ArticleRepository $repository): Response
@@ -78,13 +79,14 @@ class ArticleController extends AbstractController
     /**
      * @param EntityManagerInterface $em
      * @param int $id
+     *
      * @return RedirectResponse
+     *
      * @Route("admin/article/{id}/delete", name="admin_article_delete")
      */
     public function deleteArticle(EntityManagerInterface $em, int $id): RedirectResponse
     {
         $article = $em->getRepository(Article::class)->find($id);
-
         $em->remove($article);
         $em->flush();
 
@@ -95,7 +97,9 @@ class ArticleController extends AbstractController
      * @param EntityManagerInterface $em
      * @param Request $request
      * @param Article $article
+     *
      * @return Response
+     *
      * @Route("admin/article/{id}/update", name="admin_article_update")
      */
     public function updateArticle(EntityManagerInterface $em, Request $request, Article $article): Response
@@ -111,7 +115,7 @@ class ArticleController extends AbstractController
                 $path = $this->getParameter('kernel.project_dir') . '/public/images';
 
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = 'images/' . $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+                $newFilename = 'images/'. $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
 
                 $uploadedFile->move($path, $newFilename);
 
@@ -120,7 +124,6 @@ class ArticleController extends AbstractController
 
             $em->persist($article);
             $em->flush();
-
             return $this->redirectToRoute('admin_article_list', [
                 'id' => $article->getId()
             ]);
@@ -128,7 +131,7 @@ class ArticleController extends AbstractController
 
         return $this->render('article_admin/update.html.twig', [
             'articleForm' => $form->createView(),
-            'id' => $article->getId()
+            'id' => $article->getId(),
         ]);
     }
 }

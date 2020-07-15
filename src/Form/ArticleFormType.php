@@ -37,6 +37,8 @@ class ArticleFormType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ]);
+
+        return;
     }
 
     /**
@@ -47,7 +49,7 @@ class ArticleFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Article::class
         ]);
+
+        return;
     }
-
-
 }
